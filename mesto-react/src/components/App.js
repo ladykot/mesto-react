@@ -1,5 +1,6 @@
 import React from 'react';
 import '../index.css';
+import Footer from './Footer';
 // import logo from '../images/logo.svg'
 import Header from './Header';
 
@@ -107,9 +108,7 @@ function App() {
           </div>
         </section>
 
-        <footer className="footer">
-          <p className="footer__description">© 2020 Mesto Russia</p>
-        </footer>
+      <Footer />
       </div>
     </div>
   );
