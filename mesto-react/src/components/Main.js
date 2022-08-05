@@ -1,19 +1,33 @@
 import React from 'react';
 
+const handleEditProfileClick = () => {
+    // проверим, что попапы открываются
+    document.querySelector('.popup_type_edit-profile').classList.add('popup_opened');
+}
+
+const handleEditAvatarClick = () => {
+    document.querySelector('.popup_type_change-avatar').classList.add('popup_opened');
+}
+
+const handleAddPlaceClick = () => {
+    document.querySelector('.popup_type_create-card').classList.add('popup_opened');
+}
+
 function Main(props) {
+    console.log(props)
     return (
     <main className="content">
           <section className="profile">
               <div className="profile__avatar">
                 <img className="profile__pic" src=" " alt="фото профиля"/>
-                <img className="profile__icon" src="<%=require('./images/Vector.svg')%>"/>
+                <img onClick={handleEditAvatarClick} className="profile__icon" src="<%=require('./images/Vector.svg')%> "/>
               </div>
               <div className="profile__info">
                 <h1 className="profile__name"></h1>
-                <button type="button" className="profile__edit-button hover" aria-label="Редактировать"></button>
+                <button onClick={handleEditProfileClick} type="button" className="profile__edit-button hover" aria-label="Редактировать"></button>
                 <p className="profile__description"></p>
               </div>
-            <button type="button" className="profile__add-button hover" aria-label="Добавить"></button>
+            <button onClick={handleAddPlaceClick} type="button" className="profile__add-button hover" aria-label="Добавить"></button>
           </section>
 
           <template id="template-card">
