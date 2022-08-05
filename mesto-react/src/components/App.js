@@ -13,6 +13,7 @@ function App() {
       <Header />
       <Main />
       <Footer />
+      <ImagePopup />
       <PopupWithForm title="Редактировать профиль" name="edit-profile">
         <fieldset className="popup__inputs">
           <input
@@ -39,8 +40,46 @@ function App() {
           <span className="description-input-error popup__inputs-error"></span>
         </fieldset>
       </PopupWithForm>
-      <ImagePopup />
-      
+      <PopupWithForm title="Новое место" name="create-card">
+        <fieldset className="popup__inputs">
+          <input
+            type="text"
+            id="title-input"
+            name="name"
+            placeholder="Название"
+            className="popup__inputs-item popup__inputs-item_type_title"
+            required
+            minlength="2"
+            maxlength="30"
+          />
+          <span className="title-input-error popup__inputs-error"></span>
+          <input
+            type="url"
+            id="link-input"
+            name="link"
+            placeholder="Ссылка на картинку"
+            className="popup__inputs-item popup__inputs-item_type_link"
+            required
+          />
+          <span className="popup__inputs-error link-input-error"></span>
+        </fieldset>
+      </PopupWithForm>
+      <PopupWithForm title="Вы уверены?" name="delete-card">
+        <fieldset className="popup__inputs"></fieldset>
+      </PopupWithForm>
+      <PopupWithForm title="Обновить аватар" name="change-avatar">
+        <fieldset className="popup__inputs">
+          <input
+            type="url"
+            id="link-input-avatar"
+            name="link"
+            placeholder="Ссылка на картинку"
+            className="popup__inputs-item popup__inputs-item_type_link"
+            required
+          />
+          <span className="popup__inputs-error link-input-avatar-error"></span>
+        </fieldset>
+      </PopupWithForm>
 
       {/* <section className="popup popup_type_edit-profile">
         <div className="popup__container popup__container_edit-profile">
@@ -60,7 +99,7 @@ function App() {
         </div>
       </section> */}
 
-      <section className="popup popup_type_create-card">
+      {/* <section className="popup popup_type_create-card">
         <div className="popup__container popup__container_create-card">
           <button
             type="button"
@@ -99,7 +138,7 @@ function App() {
             </button>
           </form>
         </div>
-      </section>
+      </section> */}
 
       {/* <section className="popup popup_type_big-image popup_dark ">
         <div className="popup__container popup__container_big-image">
@@ -116,7 +155,7 @@ function App() {
         </div>
       </section> */}
 
-      <section className="popup popup_type_delete-card">
+      {/* <section className="popup popup_type_delete-card">
         <div className="popup__container">
           <button type="button" className="popup__button-close hover"></button>
           <form name="delete-card" className="popup__form">
@@ -131,9 +170,9 @@ function App() {
             </button>
           </form>
         </div>
-      </section>
+      </section> */}
 
-      <section className="popup popup_type_change-avatar">
+      {/* <section className="popup popup_type_change-avatar">
         <div className="popup__container">
           <button type="button" className="popup__button-close hover"></button>
           <form name="change-avatar" className="popup__form">
@@ -158,7 +197,7 @@ function App() {
             </button>
           </form>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }
