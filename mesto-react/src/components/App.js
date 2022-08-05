@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Main from "./Main";
 import PopupWithForm from "./ PopupWithForm";
+import ImagePopup from "./ImagePopup";
 
 function App() {
   return (
@@ -38,7 +39,9 @@ function App() {
           <span className="description-input-error popup__inputs-error"></span>
         </fieldset>
       </PopupWithForm>
+      <ImagePopup />
       
+
       {/* <section className="popup popup_type_edit-profile">
         <div className="popup__container popup__container_edit-profile">
           <button type="button" className="popup__button-close popup__button-close_type_edit hover"></button>
@@ -98,7 +101,7 @@ function App() {
         </div>
       </section>
 
-      <section className="popup popup_type_big-image popup_dark ">
+      {/* <section className="popup popup_type_big-image popup_dark ">
         <div className="popup__container popup__container_big-image">
           <button
             type="button"
@@ -111,7 +114,7 @@ function App() {
           />
           <p className="popup__title-big-image">Новое место</p>
         </div>
-      </section>
+      </section> */}
 
       <section className="popup popup_type_delete-card">
         <div className="popup__container">
