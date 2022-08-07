@@ -30,7 +30,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
-  }
+  };
 
   return (
     <div className="page">
@@ -77,6 +77,7 @@ function App() {
         title="Новое место"
         name="create-card"
         isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
       >
         {/* <fieldset className="popup__inputs"> */}
         <input
@@ -101,13 +102,19 @@ function App() {
         <span className="popup__inputs-error link-input-error"></span>
         {/* </fieldset> */}
       </PopupWithForm>
-      <PopupWithForm title="Вы уверены?" name="delete-card" isOpen={false}>
+      <PopupWithForm
+        title="Вы уверены?"
+        name="delete-card"
+        isOpen={false}
+        onClose={closeAllPopups}
+      >
         {/* <fieldset className="popup__inputs"></fieldset> */}
       </PopupWithForm>
       <PopupWithForm
         title="Обновить аватар"
         name="change-avatar"
         isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
       >
         {/* <fieldset className="popup__inputs"> */}
         <input

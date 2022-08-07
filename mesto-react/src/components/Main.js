@@ -1,11 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
+import api from "../utils/Api";
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
+function Main({
+  // пропсы не должны менятся в компоненте, для изменений используются переменные состояния
+  onEditProfile,
+  onAddPlace,
+  onEditAvatar,
+}) {
+  const [userName, setUserName] = useState(null);
+  const [userAvatar, setUserAvatar] = useState(null);
+  const [userDescription, setUserDescription] = useState(null);
+
+  api.getProfileData().then((data) => {
+    console.log(data)
+    setUserName(data.name);
+    setUserAvatar(data.avatar);
+    setUserDescription(data.about);
+  });
+
   return (
     <main className="content">
       <section className="profile">
         <div className="profile__avatar">
-          <img className="profile__pic" src=" " alt="фото профиля" />
+          <img className="profile__pic" src={userAvatar} alt="фото профиля" />
           <img
             onClick={onEditAvatar}
             className="profile__icon"
@@ -14,14 +31,14 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
           />
         </div>
         <div className="profile__info">
-          <h1 className="profile__name"></h1>
+          <h1 className="profile__name">{userName}</h1>
           <button
             onClick={onEditProfile}
             type="button"
             className="profile__edit-button hover"
             aria-label="Редактировать"
           ></button>
-          <p className="profile__description"></p>
+          <p className="profile__description">{userDescription}</p>
         </div>
         <button
           onClick={onAddPlace}
