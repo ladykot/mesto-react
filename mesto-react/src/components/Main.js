@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import api from "../utils/Api";
+import Card from "./Card";
 
 function Main({
-  // пропсы не должны менятся в компоненте, для изменений используются переменные состояния
+  // пропсы не должны меняться в компоненте, для изменений используются переменные состояния
   onEditProfile,
   onAddPlace,
   onEditAvatar,
@@ -10,13 +11,19 @@ function Main({
   const [userName, setUserName] = useState(null);
   const [userAvatar, setUserAvatar] = useState(null);
   const [userDescription, setUserDescription] = useState(null);
+  const [cards, setCards] = useState([]);
 
+  // получаем данные с сервера и ставим в профиль
   api.getProfileData().then((data) => {
-    console.log(data)
     setUserName(data.name);
     setUserAvatar(data.avatar);
     setUserDescription(data.about);
   });
+
+  api.getInitialCards().then((data) => {
+    console.log(data)
+    setCards(data)
+  })
 
   return (
     <main className="content">
@@ -48,27 +55,11 @@ function Main({
         ></button>
       </section>
 
-      <template id="template-card">
-        <div className="cards__item">
-          <img className="cards__item-pic hover" />
-          <button
-            type="button"
-            className="cards__item-delete"
-            aria-label="корзина"
-          ></button>
-          <div className="cards__item-group">
-            <h2 className="cards__title"></h2>
-            <button
-              type="button"
-              className="cards__union"
-              aria-label="лайк"
-            ></button>
-            <span className="cards__button-counter"></span>
-          </div>
-        </div>
-      </template>
-
-      <section className="cards"></section>
+      <section className="cards">
+        {cards.map((card) => (
+          <Card card={card}/>
+        ))}
+      </section>
     </main>
   );
 }
