@@ -11,7 +11,6 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-
   const [isSelectedCard, setSelectedCard] = useState({
     isOpen: false,
     card: {},
@@ -19,7 +18,6 @@ function App() {
 
   // при клике на карточку
   const handleCardClick = (card) => {
-    console.log(card)
     setSelectedCard({ isOpen: true, card: card });
   };
 
@@ -77,8 +75,8 @@ function App() {
             placeholder="Имя"
             className="popup__inputs-item popup__inputs-item_type_name"
             required
-            minlength="2"
-            maxlength="40"
+            minLength={2}
+            maxLength="40"
           />
           <span className="name-input-error popup__inputs-error"></span>
           <input
@@ -88,8 +86,8 @@ function App() {
             placeholder="Профессиональная деятельность"
             className="popup__inputs-item popup__inputs-item_type_description"
             required
-            minlength="2"
-            maxlength="200"
+            minLength="2"
+            maxLength="200"
           />
           <span className="description-input-error popup__inputs-error"></span>
         </fieldset>
@@ -108,8 +106,8 @@ function App() {
           placeholder="Название"
           className="popup__inputs-item popup__inputs-item_type_title"
           required
-          minlength="2"
-          maxlength="30"
+          minLength="2"
+          maxLength="30"
         />
         <span className="title-input-error popup__inputs-error"></span>
         <input

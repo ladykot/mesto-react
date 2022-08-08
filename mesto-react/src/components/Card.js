@@ -1,9 +1,10 @@
 import React from "react";
 
 function Card({card, onCardClick}) {
+
+    // обработчик клика по карточке
     function handleClick() {
         onCardClick(card);
-        console.log(card)
       }  
 
     return (

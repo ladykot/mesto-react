@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import api from "../utils/Api";
 import Card from "./Card";
+import profileIcon from "../images/Vector.svg"
 
 function Main({
   // пропсы не должны меняться в компоненте, для изменений используются переменные состояния
@@ -15,15 +16,17 @@ function Main({
   const [cards, setCards] = useState([]);
 
   // получаем данные с сервера и ставим в профиль
-  api.getProfileData().then((data) => {
-    setUserName(data.name);
-    setUserAvatar(data.avatar);
-    setUserDescription(data.about);
-  });
 
-  api.getInitialCards().then((data) => {
-    setCards(data);
-  });
+  React.useEffect(() => {
+    Promise.all([api.getProfileData(), api.getInitialCards()]).then(
+      ([data, cards]) => {
+        setUserName(data.name);
+        setUserAvatar(data.avatar);
+        setUserDescription(data.about);
+        setCards(cards);
+      }
+    );
+  }, []);
 
   return (
     <main className="content">
@@ -33,7 +36,7 @@ function Main({
           <img
             onClick={onEditAvatar}
             className="profile__icon"
-            src="<%=require('./images/Vector.svg')%> "
+            src={profileIcon}
             alt=""
           />
         </div>
@@ -57,7 +60,7 @@ function Main({
 
       <section className="cards">
         {cards.map((card) => (
-          <Card card={card} onCardClick={onCardClick} />
+          <Card card={card} onCardClick={onCardClick} key={card._id}/>
         ))}
       </section>
     </main>

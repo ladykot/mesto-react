@@ -1,8 +1,6 @@
 import React from "react";
 
 function ImagePopup({ name, onClose, card, isOpen }) {
-    console.log(card)
-
   return (
     <section
       className={`popup popup_type_${name} ${
