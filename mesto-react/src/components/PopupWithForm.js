@@ -8,13 +8,18 @@ function PopupWithForm({ title, name, children, isOpen, onClose }) {
       // закрытие по оверлею
       onClick={onClose}
     >
-      <div className={`popup__container popup__container_${name}`}>
+      <div
+        className={`popup__container popup__container_${name}`}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <button
           onClick={onClose}
           type="button"
           className="popup__button-close popup__button-close_type_edit hover"
         ></button>
-        <form name={name} className="popup__form" novalidate>
+        <form name={name} className="popup__form" noValidate>
           <h3 className="popup__title">{title}</h3>
           <fieldset className="popup__inputs">{children}</fieldset>
           <button

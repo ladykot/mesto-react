@@ -12,6 +12,17 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 
+  const [isSelectedCard, setSelectedCard] = useState({
+    isOpen: false,
+    card: {},
+  });
+
+  // при клике на карточку
+  const handleCardClick = (card) => {
+    console.log(card)
+    setSelectedCard({ isOpen: true, card: card });
+  };
+
   // состояния открытия
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
@@ -30,6 +41,10 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setSelectedCard({
+      isOpen: false,
+      card: {},
+    });
   };
 
   return (
@@ -39,9 +54,15 @@ function App() {
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
         onEditAvatar={handleEditAvatarClick}
+        onCardClick={handleCardClick}
       />
       <Footer />
-      <ImagePopup />
+      <ImagePopup
+        name="big-image"
+        isOpen={isSelectedCard.isOpen}
+        card={isSelectedCard.card}
+        onClose={closeAllPopups}
+      />
       <PopupWithForm
         title="Редактировать профиль"
         name="edit-profile"

@@ -7,6 +7,7 @@ function Main({
   onEditProfile,
   onAddPlace,
   onEditAvatar,
+  onCardClick,
 }) {
   const [userName, setUserName] = useState(null);
   const [userAvatar, setUserAvatar] = useState(null);
@@ -21,9 +22,8 @@ function Main({
   });
 
   api.getInitialCards().then((data) => {
-    console.log(data)
-    setCards(data)
-  })
+    setCards(data);
+  });
 
   return (
     <main className="content">
@@ -57,7 +57,7 @@ function Main({
 
       <section className="cards">
         {cards.map((card) => (
-          <Card card={card}/>
+          <Card card={card} onCardClick={onCardClick} />
         ))}
       </section>
     </main>
