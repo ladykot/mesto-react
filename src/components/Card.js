@@ -2,13 +2,13 @@ import React from "react";
 
 function Card({card, onCardClick}) {
 
-    // обработчик клика по карточке
-    function handleClick() {
+    // обработчик клика по карточке для просмотра изображения
+    function handleImageClick() {
         onCardClick(card);
       }  
 
     return (
-        <div className="cards__item" onClick={handleClick}>
+        <div className="cards__item" onClick={handleImageClick}>
           <img className="cards__item-pic hover" src={card.link}/>
           <button
             type="button"

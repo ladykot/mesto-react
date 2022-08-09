@@ -8,41 +8,37 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 
 function App() {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  const [isSelectedCard, setSelectedCard] = useState({
-    isOpen: false,
-    card: {},
-  });
+
+  
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  const [isSelectedCard, setSelectedCard] = useState(null);
 
   // при клике на карточку
   const handleCardClick = (card) => {
-    setSelectedCard({ isOpen: true, card: card });
+    setSelectedCard(card);
   };
 
   // состояния открытия
   const handleEditProfileClick = () => {
-    setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
+    setEditProfilePopupOpen(true);
   };
 
   const handleEditAvatarClick = () => {
-    setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
+    setEditAvatarPopupOpen(true);
   };
 
   const handleAddPlaceClick = () => {
-    setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
+    setAddPlacePopupOpen(true);
   };
 
   // состояния закрытия
   const closeAllPopups = () => {
-    setIsEditProfilePopupOpen(false);
-    setIsEditAvatarPopupOpen(false);
-    setIsAddPlacePopupOpen(false);
-    setSelectedCard({
-      isOpen: false,
-      card: {},
-    });
+    setEditProfilePopupOpen(false);
+    setEditAvatarPopupOpen(false);
+    setAddPlacePopupOpen(false);
+    setSelectedCard(null);
   };
 
   return (
@@ -57,9 +53,8 @@ function App() {
       <Footer />
       <ImagePopup
         name="big-image"
-        isOpen={isSelectedCard.isOpen}
-        
-        card={isSelectedCard.card}
+        isOpen={!!isSelectedCard} // если есть карта, то isOpen == true
+        card={isSelectedCard}
         onClose={closeAllPopups}
       />
       <PopupWithForm
@@ -99,7 +94,6 @@ function App() {
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
       >
-        {/* <fieldset className="popup__inputs"> */}
         <input
           type="text"
           id="title-input"
@@ -120,7 +114,6 @@ function App() {
           required
         />
         <span className="popup__inputs-error link-input-error"></span>
-        {/* </fieldset> */}
       </PopupWithForm>
       <PopupWithForm
         title="Вы уверены?"
@@ -128,7 +121,6 @@ function App() {
         isOpen={false}
         onClose={closeAllPopups}
       >
-        {/* <fieldset className="popup__inputs"></fieldset> */}
       </PopupWithForm>
       <PopupWithForm
         title="Обновить аватар"

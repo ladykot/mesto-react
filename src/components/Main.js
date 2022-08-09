@@ -11,7 +11,7 @@ function Main({
   onCardClick,
 }) {
   const [userName, setUserName] = useState('');
-  const [userAvatar, setUserAvatar] = useState(null);
+  const [userAvatar, setUserAvatar] = useState('');
   const [userDescription, setUserDescription] = useState('');
   const [cards, setCards] = useState([]);
 
