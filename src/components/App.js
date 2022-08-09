@@ -58,6 +58,7 @@ function App() {
       <ImagePopup
         name="big-image"
         isOpen={isSelectedCard.isOpen}
+        
         card={isSelectedCard.card}
         onClose={closeAllPopups}
       />

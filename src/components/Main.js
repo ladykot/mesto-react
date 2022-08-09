@@ -10,9 +10,9 @@ function Main({
   onEditAvatar,
   onCardClick,
 }) {
-  const [userName, setUserName] = useState(null);
+  const [userName, setUserName] = useState('');
   const [userAvatar, setUserAvatar] = useState(null);
-  const [userDescription, setUserDescription] = useState(null);
+  const [userDescription, setUserDescription] = useState('');
   const [cards, setCards] = useState([]);
 
   // получаем данные с сервера и ставим в профиль
@@ -25,7 +25,7 @@ function Main({
         setUserDescription(data.about);
         setCards(cards);
       }
-    );
+    ).catch((err) => console.log(err));
   }, []);
 
   return (
