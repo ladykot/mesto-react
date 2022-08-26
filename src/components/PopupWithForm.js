@@ -2,6 +2,8 @@ import React from "react";
 
 function PopupWithForm({ title, name, children, isOpen, onClose }) {
   // если переменная isOpen == true , то ставим класс 'popup_opened'
+
+  
   return (
     <section
       className={`popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`}
