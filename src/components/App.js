@@ -16,7 +16,7 @@ function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isSelectedCard, setSelectedCard] = useState(null);
 
-  const [currentUser, setCurrentUser] = useState(''); // текущий пользователь
+  const [currentUser, setCurrentUser] = useState({}); // текущий пользователь
   
   React.useEffect(() => {
     api.getProfileData().then(
