@@ -53,7 +53,6 @@ class Api {
   }
 
   deleteCard(id) {
-    // debugger
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers,

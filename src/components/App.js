@@ -20,35 +20,38 @@ function App() {
 
   React.useEffect(() => {
     Promise.all([api.getInitialCards(), api.getProfileData()])
-    .then(([cards, data]) => {
-      setCards(cards);
-      setCurrentUser(data);
-    })
-    .catch((err) => console.log(err));
+      .then(([cards, data]) => {
+        setCards(cards);
+        setCurrentUser(data);
+      })
+      .catch((err) => console.log(err));
   }, []);
-
 
   // при клике на карточку
   const handleCardClick = (card) => {
     setSelectedCard(card);
   };
 
-  function handleCardDelete(card) { 
-    console.log('удалить карту', card)
+  // удаление карточки и обновление блока с карточками
+  function handleCardDelete(card) {
     api
+      .deleteCard(card._id)
+      .then((res) => {
+        setCards((state) => state.filter((item) => item._id !== card._id));
+      })
+      .catch((err) => console.log(err));
   }
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк пользователя на этой карточке
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     console.log(currentUser._id);
-    
+
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
-        console.log("это", newCard)
-        // debugger;
-        
+    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+      console.log("это", newCard);
+      // debugger;
+
       setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
     });
   }
