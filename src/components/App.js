@@ -7,26 +7,24 @@ import Main from "./Main";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/Api";
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function App() {
-
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isSelectedCard, setSelectedCard] = useState(null);
 
   const [currentUser, setCurrentUser] = useState({}); // текущий пользователь
-  
+  const [cards, setCards] = useState([]);
+
   React.useEffect(() => {
-    api.getProfileData().then(
-      (data) => {
-        setCurrentUser(data)
-        // setUserName(data.name);
-        // setUserAvatar(data.avatar);
-        // setUserDescription(data.about);
-      }
-    ).catch((err) => console.log(err));
+    Promise.all([api.getInitialCards(), api.getProfileData()])
+    .then(([cards, data]) => {
+      setCards(cards);
+      setCurrentUser(data);
+    })
+    .catch((err) => console.log(err));
   }, []);
 
 
@@ -34,6 +32,26 @@ function App() {
   const handleCardClick = (card) => {
     setSelectedCard(card);
   };
+
+  function handleCardDelete(card) { 
+    console.log('удалить карту', card)
+    api
+  }
+
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк пользователя на этой карточке
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    console.log(currentUser._id);
+    
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api.changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        console.log("это", newCard)
+        // debugger;
+        
+      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+    });
+  }
 
   // состояния открытия
   const handleEditProfileClick = () => {
@@ -65,6 +83,9 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
+          cards={cards}
         />
         <Footer />
         <ImagePopup
@@ -136,8 +157,7 @@ function App() {
           name="delete-card"
           isOpen={false}
           onClose={closeAllPopups}
-        >
-        </PopupWithForm>
+        ></PopupWithForm>
         <PopupWithForm
           title="Обновить аватар"
           name="change-avatar"
@@ -156,7 +176,7 @@ function App() {
           <span className="popup__inputs-error link-input-avatar-error"></span>
           {/* </fieldset> */}
         </PopupWithForm>
-    </div>
+      </div>
     </CurrentUserContext.Provider>
   );
 }

@@ -23,6 +23,13 @@ class Api {
     }).then(this._handleResponse);
   }
 
+  changeLikeCardStatus(cardId, isLiked) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: isLiked ? "DElETE" : "PUT",
+      headers: this._headers,
+    });
+  }
+
   editProfileData(name, about) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
