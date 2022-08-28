@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Main from "./Main";
 import PopupWithForm from "./PopupWithForm";
+import EditProfilePopup from './EditProfilePopup';
 import ImagePopup from "./ImagePopup";
 import api from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -14,6 +15,7 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isSelectedCard, setSelectedCard] = useState(null);
+  const [removedCard, setRemovedCard] = useState([]);
 
   const [currentUser, setCurrentUser] = useState({}); // текущий пользователь
   const [cards, setCards] = useState([]);
@@ -34,6 +36,7 @@ function App() {
 
   // удаление карточки и обновление блока с карточками
   function handleCardDelete(card) {
+    // event.preventDafault();
     api
       .deleteCard(card._id)
       .then((res) => {
@@ -43,14 +46,17 @@ function App() {
   }
 
   function handleCardLike(card) {
+    debugger
+    const isOwn = card.owner._id === currentUser._id;
+
     // Снова проверяем, есть ли уже лайк пользователя на этой карточке
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    console.log(currentUser._id);
-
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-      console.log("это", newCard);
-      // debugger;
+    api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        console.log("это", newCard);
+        // debugger;
 
       setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
     });
@@ -97,7 +103,7 @@ function App() {
           card={isSelectedCard}
           onClose={closeAllPopups}
         />
-        <PopupWithForm
+        <EditProfilePopup
           title="Редактировать профиль"
           name="edit-profile"
           isOpen={isEditProfilePopupOpen}
@@ -127,7 +133,7 @@ function App() {
             />
             <span className="description-input-error popup__inputs-error"></span>
           </fieldset>
-        </PopupWithForm>
+        </EditProfilePopup>
         <PopupWithForm
           title="Новое место"
           name="create-card"

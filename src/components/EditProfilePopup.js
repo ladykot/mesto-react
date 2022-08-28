@@ -1,6 +1,6 @@
 import React from "react";
 
-function PopupWithForm({ title, name, children, isOpen, onClose }) {
+function EditProfilePopup({ title, name, children, isOpen, onClose }) {
   // если переменная isOpen == true , то ставим класс 'popup_opened'
 
   
@@ -37,4 +37,4 @@ function PopupWithForm({ title, name, children, isOpen, onClose }) {
   );
 }
 
-export default PopupWithForm;
+export default EditProfilePopup;
