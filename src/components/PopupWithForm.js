@@ -1,6 +1,6 @@
 import React from "react";
 
-function PopupWithForm({ title, name, children, isOpen, onClose }) {
+function PopupWithForm({ title, name, isOpen, onClose }) {
   // если переменная isOpen == true , то ставим класс 'popup_opened'
 
   
@@ -23,7 +23,7 @@ function PopupWithForm({ title, name, children, isOpen, onClose }) {
         ></button>
         <form name={name} className="popup__form" noValidate>
           <h3 className="popup__title">{title}</h3>
-          <fieldset className="popup__inputs">{children}</fieldset>
+          {/* <fieldset className="popup__inputs"></fieldset> */}
           <button
             type="submit"
             className="popup__button-save"

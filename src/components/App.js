@@ -25,6 +25,7 @@ function App() {
       .then(([cards, data]) => {
         setCards(cards);
         setCurrentUser(data);
+        
       })
       .catch((err) => console.log(err));
   }, []);
@@ -105,34 +106,10 @@ function App() {
         />
         <EditProfilePopup
           title="Редактировать профиль"
-          name="edit-profile"
+          nameBlok="edit-profile"
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
         >
-          <fieldset className="popup__inputs">
-            <input
-              type="text"
-              id="name-input"
-              name="name"
-              placeholder="Имя"
-              className="popup__inputs-item popup__inputs-item_type_name"
-              required
-              minLength={2}
-              maxLength="40"
-            />
-            <span className="name-input-error popup__inputs-error"></span>
-            <input
-              type="text"
-              id="description-input"
-              name="description"
-              placeholder="Профессиональная деятельность"
-              className="popup__inputs-item popup__inputs-item_type_description"
-              required
-              minLength="2"
-              maxLength="200"
-            />
-            <span className="description-input-error popup__inputs-error"></span>
-          </fieldset>
         </EditProfilePopup>
         <PopupWithForm
           title="Новое место"
