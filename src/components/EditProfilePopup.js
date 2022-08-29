@@ -1,88 +1,77 @@
 import React, { useState } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import PopupWithForm from "./PopupWithForm";
 
+function EditProfilePopup({ isOpen, onClose, onUpdateUser,  }) {
+  const [nameUser, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const currentUser = React.useContext(CurrentUserContext); // подписка на контекст
 
-function EditProfilePopup({ title, nameBlok, isOpen, onClose }) {
-  
-    const [nameUser, setName] = useState('');
-    const [description, setDescription] = useState('');
+  const handleChangeName = (e) => {
+    // обработчик ловит данные из инпута c name
+    setName(e.target.value);
+  };
 
-    const handleChangeName = (e) => {
-        setName(e.target.value);
-    }
+  const handleChangeDescription = (e) => {
+    // обработчик ловит данные из инпута c about
+    setDescription(e.target.value);
+  };
 
-    const handleChangeDescription =(e) => {
-        setDescription(e.target.value);
-    }
+  React.useEffect(() => {
+    // хук устанавливает инпуты в зависимости от контекста
+    setName(currentUser.name);
+    setDescription(currentUser.about);
+  }, [currentUser]);
 
-    const currentUser = React.useContext(CurrentUserContext);
+  function handleSubmit(e) {
+    // обработчик сабмита формы
+    e.preventDefault();
 
-    React.useEffect(() => {
-        setName(currentUser.name);
-        setDescription(currentUser.about);
-      }, [currentUser]); 
-
+    // Передаём значения управляемых компонентов во внешний обработчик
+    onUpdateUser({
+      nameUser,
+      about: description,
+    });
+  }
 
   return (
-    <section
-      className={`popup popup_type_${nameBlok} ${isOpen ? "popup_opened" : ""}`}
-      // закрытие по оверлею
-      onClick={onClose}
+    <PopupWithForm
+      name="edit-profile"
+      title="Редактировать профиль"
+      isOpen={isOpen}
+      onClose={onClose}
+      onSubmit={handleSubmit}
     >
-      <div
-        className={`popup__container popup__container_${nameBlok}`}
-        onClick={(e) => {
-          e.stopPropagation(); // Прекращает дальнейшую передачу текущего события.
-        }}
-      >
-        <button
-          onClick={onClose}
-          type="button"
-          className="popup__button-close popup__button-close_type_edit hover"
-        ></button>
-        <form name={nameBlok} className="popup__form" noValidate>
-          <h3 className="popup__title">{title}</h3>
-          <fieldset className="popup__inputs">
-            <input
-              type="text"
-              id="name-input"
-              name="name"
-              onChange={handleChangeName}
-              value={nameUser}
-              placeholder="Имя"
-              className="popup__inputs-item popup__inputs-item_type_name"
-              required
-              minLength={2}
-              maxLength="40"
-            />
-            <span className="name-input-error popup__inputs-error"></span>
-            <input
-              type="text"
-              id="description-input"
-              name="description"
-              onChange={handleChangeDescription}
-              value={description}
-              placeholder="Профессиональная деятельность"
-              className="popup__inputs-item popup__inputs-item_type_description"
-              required
-              minLength="2"
-              maxLength="200"
-            />
-            <span className="description-input-error popup__inputs-error"></span>
-          </fieldset>
-          <button
-            type="submit"
-            className="popup__button-save"
-            aria-label="Сохранить"
-          >
-            Сохранить
-          </button>
-        </form>
-      </div>
-    </section>
+      <fieldset className="popup__inputs">
+        <input
+          type="text"
+          id="name-input"
+          name="name"
+          onChange={handleChangeName}
+          value={nameUser}
+          placeholder="Имя"
+          className="popup__inputs-item popup__inputs-item_type_name"
+          required
+          minLength={2}
+          maxLength="40"
+        />
+        <span className="name-input-error popup__inputs-error"></span>
+        <input
+          type="text"
+          id="description-input"
+          name="description"
+          onChange={handleChangeDescription}
+          value={description}
+          placeholder="Профессиональная деятельность"
+          className="popup__inputs-item popup__inputs-item_type_description"
+          required
+          minLength="2"
+          maxLength="200"
+        />
+        <span className="description-input-error popup__inputs-error"></span>
+      </fieldset>
+    </PopupWithForm>
   );
 }
-
-
 
 export default EditProfilePopup;

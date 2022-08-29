@@ -27,7 +27,7 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: isLiked ? "DElETE" : "PUT",
       headers: this._headers,
-    });
+    }).then(this._handleResponse);
   }
 
   editProfileData(name, about) {

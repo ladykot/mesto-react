@@ -1,9 +1,8 @@
 import React from "react";
 
-function PopupWithForm({ title, name, isOpen, onClose }) {
+function PopupWithForm({ title, name, isOpen, onClose, children, onSubmit }) {
   // если переменная isOpen == true , то ставим класс 'popup_opened'
 
-  
   return (
     <section
       className={`popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`}
@@ -21,9 +20,9 @@ function PopupWithForm({ title, name, isOpen, onClose }) {
           type="button"
           className="popup__button-close popup__button-close_type_edit hover"
         ></button>
-        <form name={name} className="popup__form" noValidate>
+        <form className="popup__form" onSubmit={onSubmit} noValidate>
           <h3 className="popup__title">{title}</h3>
-          {/* <fieldset className="popup__inputs"></fieldset> */}
+          {children}
           <button
             type="submit"
             className="popup__button-save"

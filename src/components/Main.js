@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import api from "../utils/Api";
 import Card from "./Card";
 import profileIcon from "../images/Vector.svg";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -12,11 +11,10 @@ function Main({
   onCardClick,
   onCardLike,
   cards,
-  onCardDelete
+  onCardDelete,
+  
 }) {
-
   const currentUser = React.useContext(CurrentUserContext);
-
 
   return (
     <main className="content">

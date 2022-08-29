@@ -25,7 +25,6 @@ function App() {
       .then(([cards, data]) => {
         setCards(cards);
         setCurrentUser(data);
-        
       })
       .catch((err) => console.log(err));
   }, []);
@@ -37,7 +36,6 @@ function App() {
 
   // удаление карточки и обновление блока с карточками
   function handleCardDelete(card) {
-    // event.preventDafault();
     api
       .deleteCard(card._id)
       .then((res) => {
@@ -46,21 +44,15 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleCardLike(card) {
-    debugger
-    const isOwn = card.owner._id === currentUser._id;
-
-    // Снова проверяем, есть ли уже лайк пользователя на этой карточке
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    // Отправляем запрос в API и получаем обновлённые данные карточки
+  function handleCardLike(card, isLiked) {
     api
-      .changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
-        console.log("это", newCard);
-        // debugger;
-
-      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
-    });
+      .changeLikeCardStatus(card._id, isLiked)
+      .then((res) => {
+        console.dir(res)
+        setCards(cards.map((c) => (c._id === res._id ? res : c)));
+        console.log(cards)
+    })
+    .catch((err) => console.log(err));
   }
 
   // состояния открытия
@@ -105,10 +97,9 @@ function App() {
           onClose={closeAllPopups}
         />
         <EditProfilePopup
-          title="Редактировать профиль"
-          nameBlok="edit-profile"
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
+          // onUpdateUser={handelUpdateUser}
         >
         </EditProfilePopup>
         <PopupWithForm
