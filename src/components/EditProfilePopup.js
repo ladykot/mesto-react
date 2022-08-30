@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import PopupWithForm from "./PopupWithForm";
 
-function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, buttonText, title}) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const currentUser = React.useContext(CurrentUserContext); // подписка на контекст
@@ -35,10 +35,11 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   return (
     <PopupWithForm
       name="edit-profile"
-      title="Редактировать профиль"
+      title={title}
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      buttonText={buttonText}
     >
       <fieldset className="popup__inputs">
         <input

@@ -1,7 +1,15 @@
 import React from "react";
 
-function PopupWithForm({ title, name, isOpen, onClose, children, onSubmit }) {
-  // если переменная isOpen == true , то ставим класс 'popup_opened'
+function PopupWithForm({
+  title,
+  name,
+  isOpen,
+  onClose,
+  children,
+  onSubmit,
+  buttonText
+}) {
+
 
   return (
     <section
@@ -28,7 +36,7 @@ function PopupWithForm({ title, name, isOpen, onClose, children, onSubmit }) {
             className="popup__button-save"
             aria-label="Сохранить"
           >
-            Сохранить
+            {buttonText}
           </button>
         </form>
       </div>

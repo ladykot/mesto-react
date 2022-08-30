@@ -16,8 +16,9 @@ function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  const [isPopupWithSubmitOpen, setPopupWithSubmitOpen] = useState(false);
   const [isSelectedCard, setSelectedCard] = useState(null);
-  const [removedCard, setRemovedCard] = useState([]);
+  const [removedCard, setRemovedCard] = useState({});
 
   const [currentUser, setCurrentUser] = useState({}); // текущий пользователь
   const [cards, setCards] = useState([]);
@@ -37,11 +38,13 @@ function App() {
   };
 
   // удаление карточки и обновление блока с карточками
-  function handleCardDelete(card) {
+  function handleCardDelete(e) {
+    e.preventDefault();
     api
-      .deleteCard(card._id)
+      .deleteCard(removedCard._id)
       .then((res) => {
-        setCards((state) => state.filter((item) => item._id !== card._id));
+        setCards((state) => state.filter((item) => item._id !== removedCard._id));
+        closeAllPopups();
       })
       .catch((err) => console.log(err));
   }
@@ -69,12 +72,18 @@ function App() {
     setAddPlacePopupOpen(true);
   };
 
+  const handleCardDeleteClick = (card) => {
+    setRemovedCard(card);
+    setPopupWithSubmitOpen(true);
+  }
+
   // состояния закрытия
   const closeAllPopups = () => {
     setEditProfilePopupOpen(false);
     setEditAvatarPopupOpen(false);
     setAddPlacePopupOpen(false);
     setSelectedCard(null);
+    setPopupWithSubmitOpen(false);
   };
 
   // добавление новых данных в профиле
@@ -99,7 +108,6 @@ function App() {
 
   // добавление новой карточки на сервер
   const handleAddPlaceSubmit = ({name, link}) => {
-    console.log("тык")
     api.addCard(name, link)
       .then((newCard) => {
         setCards([newCard, ...cards]);
@@ -118,8 +126,9 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
-          onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
+          onCardLike={handleCardLike}
+          onCardDeleteClick={handleCardDeleteClick} // открыли попап подтверждения
           cards={cards}
         />
         <Footer />
@@ -130,9 +139,11 @@ function App() {
           onClose={closeAllPopups}
         />
         <EditProfilePopup
+          title="Редактировать профиль"
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handelUpdateUser}
+          buttonText={"Сохранить"}
         >
         </EditProfilePopup>
         <AddPlacePopup
@@ -141,13 +152,16 @@ function App() {
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
+          buttonText={"Сохранить"}
         >
         </AddPlacePopup>
         <PopupWithForm
           title="Вы уверены?"
           name="delete-card"
-          isOpen={false}
+          isOpen={isPopupWithSubmitOpen}
           onClose={closeAllPopups}
+          buttonText={"Да"}
+          onSubmit={handleCardDelete}
         ></PopupWithForm>
         <EditAvatarPopup
           title="Обновить аватар"
@@ -155,6 +169,7 @@ function App() {
           isOpen={isEditAvatarPopupOpen}
           onUpdateAvatar={handleUpdateAvatar}
           onClose={closeAllPopups}
+          buttonText={"Сохранить"}
         >
         </EditAvatarPopup>
       </div>

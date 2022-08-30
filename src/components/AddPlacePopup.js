@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import PopupWithForm from "./PopupWithForm";
 
 
-function AddPlacePopup ({isOpen, onClose, onAddPlace}) {
+function AddPlacePopup ({isOpen, onClose, onAddPlace, buttonText}) {
     const [name, setName] = useState("");
     const [link, setLink] = useState("");
 
@@ -30,7 +30,9 @@ function AddPlacePopup ({isOpen, onClose, onAddPlace}) {
           isOpen={isOpen}
           onClose={onClose}
           onSubmit={handleSubmit}
+          buttonText={buttonText}
         >
+        <fieldset className="popup__inputs">
           <input
             type="text"
             id="title-input"
@@ -50,11 +52,11 @@ function AddPlacePopup ({isOpen, onClose, onAddPlace}) {
             name="link"
             value={link}
             onChange={handleChangeLink}
-
             placeholder="Ссылка на картинку"
             className="popup__inputs-item popup__inputs-item_type_link"
             required
           />
+        </fieldset>
           <span className="popup__inputs-error link-input-error"></span>
         </PopupWithForm>
     )
