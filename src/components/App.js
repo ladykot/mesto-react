@@ -48,9 +48,7 @@ function App() {
     api
       .changeLikeCardStatus(card._id, isLiked)
       .then((res) => {
-        console.dir(res)
         setCards(cards.map((c) => (c._id === res._id ? res : c)));
-        console.log(cards)
     })
     .catch((err) => console.log(err));
   }
@@ -76,6 +74,15 @@ function App() {
     setSelectedCard(null);
   };
 
+  const handelUpdateUser = ({name, about}) => {
+    api.editProfileData(name, about)
+      .then((data) => {
+        setCurrentUser(data);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -99,7 +106,7 @@ function App() {
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-          // onUpdateUser={handelUpdateUser}
+          onUpdateUser={handelUpdateUser}
         >
         </EditProfilePopup>
         <PopupWithForm

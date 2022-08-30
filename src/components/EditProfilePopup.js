@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import PopupWithForm from "./PopupWithForm";
 
-function EditProfilePopup({ isOpen, onClose, onUpdateUser,  }) {
-  const [nameUser, setName] = useState("");
+function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
+  const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const currentUser = React.useContext(CurrentUserContext); // подписка на контекст
 
@@ -23,13 +23,11 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser,  }) {
     setDescription(currentUser.about);
   }, [currentUser]);
 
-  function handleSubmit(e) {
-    // обработчик сабмита формы
+  const handleSubmit = (e) => { // обработчик сабмита формы
     e.preventDefault();
-
     // Передаём значения управляемых компонентов во внешний обработчик
     onUpdateUser({
-      nameUser,
+      name,
       about: description,
     });
   }
@@ -48,7 +46,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser,  }) {
           id="name-input"
           name="name"
           onChange={handleChangeName}
-          value={nameUser}
+          value={name}
           placeholder="Имя"
           className="popup__inputs-item popup__inputs-item_type_name"
           required
