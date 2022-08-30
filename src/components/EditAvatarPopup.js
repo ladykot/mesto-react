@@ -1,9 +1,7 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
-import { useRef } from "react";
 
 function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
-    // const [link, setLink] = useState('');
     const avatar = React.useRef();
 
     const handleSubmit = (e) => {
@@ -24,7 +22,6 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
             id="link-input-avatar"
             name="link"
             ref={avatar}
-            // onChange={handleChangevatar}
             placeholder="Ссылка на картинку"
             className="popup__inputs-item popup__inputs-item_type_link"
             required

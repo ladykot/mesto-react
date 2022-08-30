@@ -7,6 +7,7 @@ import Main from "./Main";
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -123,33 +124,13 @@ function App() {
           onUpdateUser={handelUpdateUser}
         >
         </EditProfilePopup>
-        <PopupWithForm
+        <AddPlacePopup
           title="Новое место"
           name="create-card"
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
         >
-          <input
-            type="text"
-            id="title-input"
-            name="name"
-            placeholder="Название"
-            className="popup__inputs-item popup__inputs-item_type_title"
-            required
-            minLength="2"
-            maxLength="30"
-          />
-          <span className="title-input-error popup__inputs-error"></span>
-          <input
-            type="url"
-            id="link-input"
-            name="link"
-            placeholder="Ссылка на картинку"
-            className="popup__inputs-item popup__inputs-item_type_link"
-            required
-          />
-          <span className="popup__inputs-error link-input-error"></span>
-        </PopupWithForm>
+        </AddPlacePopup>
         <PopupWithForm
           title="Вы уверены?"
           name="delete-card"
