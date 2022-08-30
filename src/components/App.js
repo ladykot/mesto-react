@@ -54,7 +54,7 @@ function App() {
     api
       .changeLikeCardStatus(card._id, isLiked)
       .then((res) => {
-        setCards(cards.map((c) => (c._id === res._id ? res : c)));
+        setCards(state => state.map(c => (c._id === res._id ? res : c)));
     })
     .catch((err) => console.log(err));
   }
@@ -143,7 +143,7 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handelUpdateUser}
-          buttonText={"Сохранить"}
+          buttonText="Сохранить"
         >
         </EditProfilePopup>
         <AddPlacePopup
@@ -152,7 +152,7 @@ function App() {
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
-          buttonText={"Сохранить"}
+          buttonText="Сохранить"
         >
         </AddPlacePopup>
         <PopupWithForm
@@ -160,7 +160,7 @@ function App() {
           name="delete-card"
           isOpen={isPopupWithSubmitOpen}
           onClose={closeAllPopups}
-          buttonText={"Да"}
+          buttonText="Да"
           onSubmit={handleCardDelete}
         ></PopupWithForm>
         <EditAvatarPopup
@@ -169,7 +169,7 @@ function App() {
           isOpen={isEditAvatarPopupOpen}
           onUpdateAvatar={handleUpdateAvatar}
           onClose={closeAllPopups}
-          buttonText={"Сохранить"}
+          buttonText="Сохранить"
         >
         </EditAvatarPopup>
       </div>
