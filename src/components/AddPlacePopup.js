@@ -1,19 +1,42 @@
-import React from "react";
+import React, {useState} from "react";
 import PopupWithForm from "./PopupWithForm";
 
 
-function AddPlacePopup ({isOpen, onClose}) {
+function AddPlacePopup ({isOpen, onClose, onAddPlace}) {
+    const [name, setName] = useState("");
+    const [link, setLink] = useState("");
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    // Передаём значения управляемых компонентов во внешний обработчик
+        onAddPlace({
+        name,
+        link,
+        });
+    }
+
+    const handleChangeName = (e) => {
+        setName(e.target.value)
+    }
+
+    const handleChangeLink = (e) => {
+        setLink(e.target.value)
+    }
+
     return (
         <PopupWithForm
           title="Новое место"
           name="create-card"
           isOpen={isOpen}
           onClose={onClose}
+          onSubmit={handleSubmit}
         >
           <input
             type="text"
             id="title-input"
             name="name"
+            value={name}
+            onChange={handleChangeName}
             placeholder="Название"
             className="popup__inputs-item popup__inputs-item_type_title"
             required
@@ -25,6 +48,9 @@ function AddPlacePopup ({isOpen, onClose}) {
             type="url"
             id="link-input"
             name="link"
+            value={link}
+            onChange={handleChangeLink}
+
             placeholder="Ссылка на картинку"
             className="popup__inputs-item popup__inputs-item_type_link"
             required

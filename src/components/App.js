@@ -89,13 +89,24 @@ function App() {
 
   // добавление нового аватара
   const handleUpdateAvatar = (avatar) => {
-    console.log(avatar)
     api.changeAvatar(avatar)
       .then((data) => {
         setCurrentUser(data);
         closeAllPopups();
       })
       .catch((err) => console.log(err));
+  }
+
+  // добавление новой карточки на сервер
+  const handleAddPlaceSubmit = ({name, link}) => {
+    console.log("тык")
+    api.addCard(name, link)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+    
   }
 
   return (
@@ -129,6 +140,7 @@ function App() {
           name="create-card"
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
+          onAddPlace={handleAddPlaceSubmit}
         >
         </AddPlacePopup>
         <PopupWithForm
