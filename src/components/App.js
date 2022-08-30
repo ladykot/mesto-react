@@ -6,6 +6,7 @@ import Header from "./Header";
 import Main from "./Main";
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from "./EditAvatarPopup";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -44,6 +45,7 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  // обработка лайка
   function handleCardLike(card, isLiked) {
     api
       .changeLikeCardStatus(card._id, isLiked)
@@ -74,8 +76,20 @@ function App() {
     setSelectedCard(null);
   };
 
+  // добавление новых данных в профиле
   const handelUpdateUser = ({name, about}) => {
     api.editProfileData(name, about)
+      .then((data) => {
+        setCurrentUser(data);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+  }
+
+  // добавление нового аватара
+  const handleUpdateAvatar = (avatar) => {
+    console.log(avatar)
+    api.changeAvatar(avatar)
       .then((data) => {
         setCurrentUser(data);
         closeAllPopups();
@@ -142,24 +156,14 @@ function App() {
           isOpen={false}
           onClose={closeAllPopups}
         ></PopupWithForm>
-        <PopupWithForm
+        <EditAvatarPopup
           title="Обновить аватар"
           name="change-avatar"
           isOpen={isEditAvatarPopupOpen}
+          onUpdateAvatar={handleUpdateAvatar}
           onClose={closeAllPopups}
         >
-          {/* <fieldset className="popup__inputs"> */}
-          <input
-            type="url"
-            id="link-input-avatar"
-            name="link"
-            placeholder="Ссылка на картинку"
-            className="popup__inputs-item popup__inputs-item_type_link"
-            required
-          />
-          <span className="popup__inputs-error link-input-avatar-error"></span>
-          {/* </fieldset> */}
-        </PopupWithForm>
+        </EditAvatarPopup>
       </div>
     </CurrentUserContext.Provider>
   );
