@@ -9,6 +9,10 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar, buttonText, title, na
         onUpdateAvatar(avatar.current.value); // получаем значение из рефа
       }
 
+    React.useEffect(() => {
+      (avatar.current.value = "")
+    }, [isOpen]);
+
     return (
         <PopupWithForm
           title={title}
